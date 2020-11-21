@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Markdown基本语法</title>
+      <link href="2020/11/20/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"/>
+      <url>2020/11/20/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="一、标题"><a href="#一、标题" class="headerlink" title="一、标题"></a>一、标题</h1><a id="more"></a><p>在想要设置为标题的文字前面加#来表示<br>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p><p>示例(实际应用中去掉前方\或丨)：<br>\1. # 这是一级标题<br>\2. ## 这是二级标题<br>\3. ### 这是三级标题<br>\4. #### 这是四级标题<br>\4. ##### 这是五级标题<br>\6. ###### 这是六级标题<br>效果：</p><h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><h3 id="这是三级标题"><a href="#这是三级标题" class="headerlink" title="这是三级标题"></a>这是三级标题</h3><h4 id="这是四级标题"><a href="#这是四级标题" class="headerlink" title="这是四级标题"></a>这是四级标题</h4><h5 id="这是五级标题"><a href="#这是五级标题" class="headerlink" title="这是五级标题"></a>这是五级标题</h5><h6 id="这是六级标题"><a href="#这是六级标题" class="headerlink" title="这是六级标题"></a>这是六级标题</h6><h1 id="二、字体"><a href="#二、字体" class="headerlink" title="二、字体"></a>二、字体</h1><p> 要加粗的文字左右分别用两个”<em>“号包起来<br> 要倾斜的文字左右分别用一个”</em>“号包起来<br> 要倾斜和加粗的文字左右分别用三个”<em>“号包起来<br> 要加删除线的文字左右分别用两个”~~”号包起来<br>示例：<br>\1. <strong>这是加粗的文字</strong><br>\2. <em>这是倾斜的文字</em><br>\3. **</em>这是斜体加粗的文字***<br>\4. <del>这是加删除线的文字</del></p><p>效果：<br><strong>这是加粗的文字</strong><br><em>这是倾斜的文字</em><br>**<em>这是斜体加粗的文字**</em><br><del>这是加删除线的文字</del></p><h1 id="三、引用"><a href="#三、引用" class="headerlink" title="三、引用"></a>三、引用</h1><p>在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&gt;&gt;三个&gt;&gt;&gt;<br>n个…<br>示例：<br>\1. &gt;这是引用的内容<br>\2. &gt;&gt;这是引用的内容<br>\3. &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这是引用的内容</p><p>效果：</p><blockquote><p>这是引用的内容</p><blockquote><p>这是引用的内容</p><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>这是引用的内容</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote><h1 id="四、分割线"><a href="#四、分割线" class="headerlink" title="四、分割线"></a>四、分割线</h1><p>三个或者三个以上的 - 或者 * 都可以。<br>示例：<br>\1. —<br>\2. —-<br>\3. <strong>*<br>\4. ***</strong></p><h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h2><hr><hr><hr><blockquote><p>持续更新中</p></blockquote><p><a href="https://www.jianshu.com/p/191d1e21f7ed/">文章内容来源</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>前n项和</title>
+      <link href="2020/11/19/%E5%89%8Dn%E9%A1%B9%E5%92%8C/"/>
+      <url>2020/11/19/%E5%89%8Dn%E9%A1%B9%E5%92%8C/</url>
+      
+        <content type="html"><![CDATA[<h1 id="计算前n项和（C语言）"><a href="#计算前n项和（C语言）" class="headerlink" title="计算前n项和（C语言）"></a>计算前n项和（C语言）</h1><a id="more"></a><p> #include &lt;stdio.h&gt; //计算1+2+3+…+n<br> int main(void)<br> {<br>    int a, b, c, d;<br>    b = 0;<br>    c = 0;<br>    printf(“请输入1开始程序\n”);<br>    while(scanf(“%d”, &amp;d) == 1)<br>    {<br>        printf(“请输入n（为数字），输出结果为：1+2+3+…+n\n”);<br>        scanf(“%d”, &amp;a);<br>        while (b &lt;= a)<br>            {<br>                 c = b + c;<br>                 b++;<br>            }<br>        printf(“1+2+3+…+n = %d\n”, c);<br>        printf(“请输入q离开程序，或者输入1再次开始程序计算令一个1+2+3+…+n\n”);<br>        b = 0;<br>        c = 0;<br>    }<br>    return 0;<br> }</p><blockquote><p>因本人能力限制，不会其他的函数，所以此代码比较复杂。</p></blockquote><hr><h2 id="推荐一本C语言入门书籍"><a href="#推荐一本C语言入门书籍" class="headerlink" title="推荐一本C语言入门书籍"></a>推荐一本C语言入门书籍</h2><p><img src="https://img1.doubanio.com/view/subject/l/public/s29438897.jpg" alt="C Primer Plus"><br><a href="https://item.jd.com/12627795.html">购买C Primer Plus（京东）</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="2020/11/19/hello-world/"/>
+      <url>2020/11/19/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><a id="more"></a><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
