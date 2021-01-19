@@ -18,8 +18,11 @@
 <meta property="og:image" content="http://example.com/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/SimpleRev_1.png">
 <meta property="og:image" content="http://example.com/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/SimpleRev_2.png">
 <meta property="og:image" content="http://example.com/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/SimpleRev_3.png">
+<meta property="og:image" content="http://example.com/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/xor_1.png">
+<meta property="og:image" content="http://example.com/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/xor_2.png">
+<meta property="og:image" content="http://example.com/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/xor_4.png">
 <meta property="article:published_time" content="2021-01-16T15:43:18.000Z">
-<meta property="article:modified_time" content="2021-01-16T16:12:20.004Z">
+<meta property="article:modified_time" content="2021-01-17T09:30:52.517Z">
 <meta property="article:author" content="洛毓">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/SimpleRev_1.png">
@@ -71,7 +74,7 @@
 			</ul>
 		</nav>
 		<nav>
-             总文章数 8
+             总文章数 9
         </nav>
 		<nav class="header-smart-menu">
     		
@@ -193,6 +196,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char text[]&#x3D;&quot;killshadow&quot;;</span><br><span class="line">    char key[]&#x3D;&quot;adsfkndcls&quot;;</span><br><span class="line">    int v5 &#x3D; strlen(key),i,j,v3&#x3D;0;</span><br><span class="line">    char flag[v5];</span><br><span class="line">    for ( i &#x3D; 0; i &lt; v5; ++i )</span><br><span class="line">    &#123;</span><br><span class="line">        if ( key[v3 % v5] &gt; 64 &amp;&amp; key[v3 % v5] &lt;&#x3D; 90 )</span><br><span class="line">            key[i] &#x3D; key[v3 % v5] + 32;</span><br><span class="line">        ++v3;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i&#x3D;0;i&lt;v5;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        for(j&#x3D;0;j&lt;5;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            flag[i] &#x3D; text[i] - 97 + 26*j + 39 -97 + key[i];</span><br><span class="line">            if(flag[i] &gt;&#x3D; 65 &amp;&amp; flag[i] &lt;&#x3D; 90)</span><br><span class="line">                printf(&quot;%c&quot;,flag[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/SimpleRev_3.png"></p>
 <p>最后在外面套上falg。</p>
+<h1 id="xor"><a href="#xor" class="headerlink" title="xor"></a>xor</h1><p><a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#xor">题目链接</a><br>查看文件信息</p>
+<p><img src="/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/xor_1.png"></p>
+<p>ida查看main函数伪代码</p>
+<p><img src="/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/xor_2.png"></p>
+<p>意思就是输入33个字符，后一位与前一位进行异或运算，异或后的结果与global比较，相同则成功。我们对global进行逆运算，得出的即是flag。两次异或会还原，所以异或的逆运算还是异或。<br>下面为脚本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char v6[33];</span><br><span class="line">    char global[33]&#x3D;&#123;&#39;f&#39;,0xA,&#39;k&#39;,0xC,&#39;w&#39;,&#39;&amp;&#39;,&#39;O&#39;,&#39;.&#39;,&#39;@&#39;,0x11,&#39;x&#39;,0x0D,&#39;Z&#39;,&#39;;&#39;,&#39;U&#39;,0x11,&#39;p&#39;</span><br><span class="line">    ,0x19,&#39;F&#39;,0x1F,&#39;v&#39;,&#39;&quot;&#39;,&#39;M&#39;,&#39;#&#39;,&#39;D&#39;,0x0E,&#39;g&#39;,6,&#39;h&#39;,0x0F,&#39;G&#39;,&#39;2&#39;,&#39;O&#39;&#125;;</span><br><span class="line">    int i;</span><br><span class="line">    for ( i &#x3D; 1; i &lt; 33; ++i )</span><br><span class="line">    &#123;</span><br><span class="line">        v6[i] &#x3D;global[i] ^ global[i - 1];</span><br><span class="line">        printf(&quot;%c&quot;,v6[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/xor_4.png"></p>
+<p>第一位f是不运算的，抄上就行了。</p>
 
       
 
@@ -265,6 +276,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2021/01/19/Buuctf%E2%80%94%E2%80%94%E5%88%AE%E5%BC%80%E6%9C%89%E5%A5%96/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Buuctf——刮开有奖
+        
+      </div>
+    </a>
+  
   
     <a href="/2020/12/05/%E7%AC%AC%E4%BA%8C%E5%91%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">第二周学习与做题记录</div>
@@ -294,7 +314,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SimpleRev"><span class="toc-number">1.</span> <span class="toc-text">SimpleRev</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SimpleRev"><span class="toc-number">1.</span> <span class="toc-text">SimpleRev</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xor"><span class="toc-number">2.</span> <span class="toc-text">xor</span></a></li></ol>
                     </div>
                 </span>
             </div>
