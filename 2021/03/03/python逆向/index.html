@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>python逆向 | luoyu-1224</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="test附件链接 提取码：0000">
+  <meta name="description" content="test">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python逆向">
 <meta property="og:url" content="http://example.com/2021/03/03/python%E9%80%86%E5%90%91/index.html">
 <meta property="og:site_name" content="luoyu-1224">
-<meta property="og:description" content="test附件链接 提取码：0000">
+<meta property="og:description" content="test">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-03T11:09:37.000Z">
-<meta property="article:modified_time" content="2021-03-05T14:48:43.065Z">
+<meta property="article:modified_time" content="2021-03-07T05:52:33.986Z">
 <meta property="article:author" content="洛毓">
 <meta name="twitter:card" content="summary">
   
@@ -180,8 +180,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1DGgkAlcAH1QP1LROT60Ipg">附件链接</a> 提取码：0000</p>
-<a id="more"></a>
+        <h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1><a id="more"></a>
+<p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1DGgkAlcAH1QP1LROT60Ipg">附件链接</a> 提取码：0000</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from libnum import *</span><br><span class="line">ans &#x3D; 0x6675FA7F228DBCEB6A2DC223A37FC64FE67E61L</span><br><span class="line">flag &#x3D; s2n(input(&#39;Input your flag: &#39;))</span><br><span class="line">flag ^&#x3D; flag &gt;&gt; 10</span><br><span class="line">if flag &#x3D;&#x3D; ans:</span><br><span class="line">    print(&#39;You are right!&#39;)</span><br><span class="line">else:</span><br><span class="line">    print(&#39;Try again!&#39;)</span><br></pre></td></tr></table></figure>
 <p>flag的前十位与ans的前十位相同，flag的11-20位是flag1-10位与ans的11-20位异或的结果，以下为脚本。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int ans[151]&#x3D;&#123;1,1,0,0,1,1,0,0,1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,0,0,1,0,0,0,</span><br><span class="line">		1,0,1,0,0,0,1,1,0,1,1,0,1,1,1,1,0,</span><br><span class="line">	0,1,1,1,0,1,0,1,1,0,1,1,0,1,0,1,0,0,0,1,0,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,0,1,</span><br><span class="line">	0,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0,0,</span><br><span class="line">	0,1,1,0,0,1,0,0,1,1,1,1,1,1,1,0,0,1,1,0,0,1,1,1,1,1,1,0,0,1,1,0,0,0,0,1&#125;;</span><br><span class="line">	int flag[151];</span><br><span class="line">	int i,k,j&#x3D;10;</span><br><span class="line">	for(i&#x3D;0;i&lt;10;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		flag[i]&#x3D;ans[i];</span><br><span class="line">		printf(&quot;%d&quot;,flag[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	for(k&#x3D;0;k&lt;14;k++)</span><br><span class="line">	&#123;</span><br><span class="line">		for(i&#x3D;j;i&lt;j+10;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			flag[i]&#x3D;ans[i]^flag[i-10];</span><br><span class="line">			printf(&quot;%d&quot;,flag[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		j&#x3D;j+10;</span><br><span class="line">	&#125;</span><br><span class="line">	flag[151]&#x3D;flag[141]^ans[151];</span><br><span class="line">	printf(&quot;%d&quot;,flag[151]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
