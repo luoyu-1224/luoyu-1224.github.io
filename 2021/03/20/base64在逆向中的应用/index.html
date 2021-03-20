@@ -6,15 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021/1 | luoyu-1224</title>
+  <title>base64在逆向中的应用 | luoyu-1224</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="luoyu-1224">
-<meta property="og:url" content="http://example.com/archives/2021/01/index.html">
+  <meta name="description" content="base64的原理和C语言实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="base64在逆向中的应用">
+<meta property="og:url" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="luoyu-1224">
+<meta property="og:description" content="base64的原理和C语言实现">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/1.PNG">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/2.PNG">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/3.PNG">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/4.PNG">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/5.PNG">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/6.PNG">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/7.PNG">
+<meta property="og:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/8.PNG">
+<meta property="article:published_time" content="2021-03-20T02:39:48.000Z">
+<meta property="article:modified_time" content="2021-03-20T09:00:41.653Z">
 <meta property="article:author" content="洛毓">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/1.PNG">
   
     <link rel="alternative" href="/atom.xml" title="luoyu-1224" type="application/atom+xml">
   
@@ -145,75 +158,194 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-base64在逆向中的应用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/01/19/Buuctf%E2%80%94%E2%80%94%E5%88%AE%E5%BC%80%E6%9C%89%E5%A5%96/" class="archive-article-date">
-  	<time datetime="2021-01-19T14:15:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-19</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/19/Buuctf%E2%80%94%E2%80%94%E5%88%AE%E5%BC%80%E6%9C%89%E5%A5%96/">Buuctf——刮开有奖</a>
+    <h1 class="article-title" itemprop="name">
+      base64在逆向中的应用
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+         <!--显示阅读次数-->
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/" class="archive-article-date">
-  	<time datetime="2021-01-16T15:43:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-16</time>
+  <br/>
+  <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+  <span class="icon-sort"></span>
+  <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+  </span>
+  </a>
+
+<!--显示阅读次数完毕-->
+        
+        <a href="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2021-03-20T02:39:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-20</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/16/%E5%AF%92%E5%81%87%E7%AC%AC%E4%B8%80%E5%91%A8/">寒假第一周</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="base64的原理和C语言实现"><a href="#base64的原理和C语言实现" class="headerlink" title="base64的原理和C语言实现"></a>base64的原理和C语言实现</h1><a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
-          
+<p>原理参考此篇文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/wo541075754/article/details/81734770">链接</a></p>
+<p>C语言代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">char table[65]&#x3D;&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+&#x2F;&quot;;</span><br><span class="line">char padding_char&#x3D;&#39;&#x3D;&#39;;</span><br><span class="line"></span><br><span class="line">int findchr(char *array,char ch)&#123;</span><br><span class="line">    for(int i&#x3D;0;i&lt;strlen(array);i++)&#123;</span><br><span class="line">        if(array[i]&#x3D;&#x3D;ch)&#123;</span><br><span class="line">            return i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void base64_encode(char *src,char *result)&#123;</span><br><span class="line">    int fill_bit&#x3D;0;</span><br><span class="line">    int data_length;</span><br><span class="line">    int result_length;</span><br><span class="line">    int index;</span><br><span class="line">    _Bool full&#x3D;trunc;</span><br><span class="line">    data_length&#x3D;strlen(src);</span><br><span class="line">    &#x2F;&#x2F;printf(&quot;length:%d\n&quot;,data_length);</span><br><span class="line">    fill_bit&#x3D;((3-strlen(src)%3)%3); &#x2F;&#x2F;计算未满字节，注意除去3的情况</span><br><span class="line">    for(int k&#x3D;0;k&lt;fill_bit;k++)&#123;</span><br><span class="line">        src[data_length+k]&#x3D;&#39;\0&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">    int j&#x3D;0;</span><br><span class="line">    for(int i&#x3D;0;i&lt;data_length;i+&#x3D;3)&#123;</span><br><span class="line">        index&#x3D;src[i]&gt;&gt;2;</span><br><span class="line">        result[j++]&#x3D;table[index];</span><br><span class="line">        index&#x3D;((src[i]&amp;3)&lt;&lt;4)+(src[i+1]&gt;&gt;4);</span><br><span class="line">        result[j++]&#x3D;table[index];</span><br><span class="line">        index&#x3D;((src[i+1]&amp;15)&lt;&lt;2)+(src[i+2]&gt;&gt;6);</span><br><span class="line">        result[j++]&#x3D;table[index];</span><br><span class="line">        index&#x3D;(src[i+2]&amp;63);</span><br><span class="line">        result[j++]&#x3D;table[index];</span><br><span class="line">        &#x2F;&#x2F;&lt;&lt; &gt;&gt; 运算符的优先级低于+ -，注意加括号</span><br><span class="line">    &#125;</span><br><span class="line">    result_length&#x3D;strlen(result);</span><br><span class="line">    for(int k&#x3D;0;k&lt;fill_bit;k++)&#123;</span><br><span class="line">        result[result_length-1-k]&#x3D;padding_char; &#x2F;&#x2F;把多余的A字符替换为&#x3D;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void base64_decode(char *src,char *result)&#123;</span><br><span class="line">    int base_len;</span><br><span class="line">    int j&#x3D;0;</span><br><span class="line">    base_len&#x3D;strlen(src);</span><br><span class="line">    &#x2F;&#x2F;printf(&quot;length:%d\n&quot;,base_len);</span><br><span class="line">    for(int i&#x3D;0;i&lt;base_len;i++)&#123;</span><br><span class="line">        if(src[i]&#x3D;&#x3D;padding_char)</span><br><span class="line">            src[i]&#x3D;&#39;A&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;printf(&quot;%s\n&quot;,src);</span><br><span class="line">    for(int i&#x3D;0;i&lt;base_len;i+&#x3D;4)&#123;</span><br><span class="line">        result[j++]&#x3D;(findchr(table,src[i])&lt;&lt;2)+(findchr(table,src[i+1])&gt;&gt;4);</span><br><span class="line">        result[j++]&#x3D;(findchr(table,src[i+1])&lt;&lt;4)+(findchr(table,src[i+2])&gt;&gt;2);</span><br><span class="line">        result[j++]&#x3D;((findchr(table,src[i+2])&amp;3)&lt;&lt;6)+(findchr(table,src[i+3]));</span><br><span class="line">        &#x2F;&#x2F;注意编码是table对应的编码，不是原来的ascii码</span><br><span class="line">        &#x2F;&#x2F;按位运算符优先级低于位移运算符，注意括号</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    char words[100]&#x3D;&quot;abc&quot;;</span><br><span class="line">    char en_words[100]&#x3D;&quot;&quot;;</span><br><span class="line">    char de_words[100]&#x3D;&quot;&quot;;</span><br><span class="line">    base64_encode(words,en_words);</span><br><span class="line">    printf(&quot;encode:%s\n&quot;,en_words);</span><br><span class="line">    base64_decode(en_words,de_words);</span><br><span class="line">    printf(&quot;decode:%s\n&quot;,de_words);</span><br><span class="line">    return 0;</span><br><span class="line">    &#x2F;&#x2F;摘抄于https:&#x2F;&#x2F;eqqie.cn&#x2F;index.php&#x2F;laji_note&#x2F;785&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="base64在逆向中的应用"><a href="#base64在逆向中的应用" class="headerlink" title="base64在逆向中的应用"></a>base64在逆向中的应用</h1><h2 id="1-直接使用"><a href="#1-直接使用" class="headerlink" title="1.直接使用"></a>1.直接使用</h2><h3 id="flag为解密结果"><a href="#flag为解密结果" class="headerlink" title="flag为解密结果"></a>flag为解密结果</h3><p><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/1.PNG"></p>
+<p>图中的flag为ZmxhZ3t5b3VfZ2V0X2l0fQ==，经base64解码得</p>
+<blockquote>
+<p>flag{you_get_it}</p>
+</blockquote>
+<h3 id="flag为加密结果"><a href="#flag为加密结果" class="headerlink" title="flag为加密结果"></a>flag为加密结果</h3><p><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/2.PNG"></p>
+<p>图中的str也是ZmxhZ3t5b3VfZ2V0X2l0fQ==，经base64加密得</p>
+<blockquote>
+<p>flag：Wm14aFozdDViM1ZmWjJWMFgybDBmUT09</p>
+</blockquote>
+<h3 id="如何判断是加密还是解密"><a href="#如何判断是加密还是解密" class="headerlink" title="如何判断是加密还是解密"></a>如何判断是加密还是解密</h3><p>我们可以观察一下密码函数</p>
+<blockquote>
+<p>加密<br><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/3.PNG"><br>解密<br><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/4.PNG"></p>
+</blockquote>
+<p>可以发现，加密函数下有一个padding_char，点进去是一个‘=’，那这就是加密函数。<br>或者有‘&amp; 3’‘&amp; 0xf’‘&amp; 0x3f’‘= 61’,也是加密函数。<br>遇到此类题目时，大多数加密的。懒得分析也可以都试试，这也就是一会儿的时间。<br>最后的那个判断还可以和异或联系，注意一下就行，这里便不再举例，<br>下面的类型我只说加密，加密和解密的思路都是一样的。</p>
+<h2 id="2-变化字母表"><a href="#2-变化字母表" class="headerlink" title="2.变化字母表"></a>2.变化字母表</h2><p>将base64原来的字母表改变顺序、位置得到新的加密结果。<br>有两种变化方式：1.直接改变；2.用函数改变</p>
+<h3 id="直接改变"><a href="#直接改变" class="headerlink" title="直接改变"></a>直接改变</h3><p><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/5.PNG"></p>
+<p><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/6.PNG"></p>
+<p>这一题的字母表改为了’0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/‘，根据这个字母表和原版字母表的差别，将密文修改为正确的密文。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">char a[]&#x3D;&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+&#x2F;&quot;;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char b[]&#x3D;&quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+&#x2F;&quot;;</span><br><span class="line">    char c[]&#x3D;&quot;pCNxpTJkq6AAnSAAnSpIg6tZ&quot;;</span><br><span class="line">    int i,j;</span><br><span class="line">    for(i&#x3D;0;i&lt;strlen(c);i++)</span><br><span class="line">    &#123;</span><br><span class="line">        for(j&#x3D;0;j&lt;strlen(a);j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(b[j]&#x3D;&#x3D;c[i])</span><br><span class="line">            &#123;</span><br><span class="line">                c[i]&#x3D;a[j];</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i&#x3D;0;i&lt;strlen(c);i++)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(&quot;%c&quot;,c[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;Thi$_i$_fl@g&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="用函数改变"><a href="#用函数改变" class="headerlink" title="用函数改变"></a>用函数改变</h3><p>这个是调用一个外部函数改变密码表的顺序。</p>
+<p><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/7.PNG"></p>
+<p><img src="/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/8.PNG"></p>
+<p>这种方式比直接改变复杂了一点点。但也不难。<br>这里用了两次waaaagh函数，另一次再base64_encode里，没有显示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">char a[]&#x3D;&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+&#x2F;&quot;;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char b[]&#x3D;&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+&#x2F;&quot;;</span><br><span class="line">    char c[]&#x3D;&quot;tSdNt3ZouGQQr2QQr2tYkGx9&quot;;</span><br><span class="line">    int i,j;</span><br><span class="line">    int n&#x3D;10;</span><br><span class="line">	char ch;</span><br><span class="line">	while(n&lt;40)</span><br><span class="line">	&#123;</span><br><span class="line">		ch&#x3D;b[n];</span><br><span class="line">		b[n]&#x3D;b[n+10];</span><br><span class="line">		b[n+10]&#x3D;ch;</span><br><span class="line">		n++;</span><br><span class="line">	&#125;</span><br><span class="line">	n&#x3D;10;</span><br><span class="line">	while(n&lt;40)</span><br><span class="line">	&#123;</span><br><span class="line">		ch&#x3D;b[n];</span><br><span class="line">		b[n]&#x3D;b[n+10];</span><br><span class="line">		b[n+10]&#x3D;ch;</span><br><span class="line">		n++;</span><br><span class="line">	&#125;</span><br><span class="line">    for(i&#x3D;0;i&lt;strlen(c);i++)</span><br><span class="line">    &#123;</span><br><span class="line">        for(j&#x3D;0;j&lt;strlen(a);j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(b[j]&#x3D;&#x3D;c[i])</span><br><span class="line">            &#123;</span><br><span class="line">                c[i]&#x3D;a[j];</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i&#x3D;0;i&lt;strlen(c);i++)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(&quot;%c&quot;,c[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;Thi$_i$_fl@g&#125;</span><br></pre></td></tr></table></figure>
 
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/03/20/base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2021/03/03/Jarvis-OJ/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Jarvis OJ</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#base64%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8CC%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">base64的原理和C语言实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#base64%E5%9C%A8%E9%80%86%E5%90%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">base64在逆向中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">1.直接使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flag%E4%B8%BA%E8%A7%A3%E5%AF%86%E7%BB%93%E6%9E%9C"><span class="toc-number">2.1.1.</span> <span class="toc-text">flag为解密结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flag%E4%B8%BA%E5%8A%A0%E5%AF%86%E7%BB%93%E6%9E%9C"><span class="toc-number">2.1.2.</span> <span class="toc-text">flag为加密结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%98%AF%E5%8A%A0%E5%AF%86%E8%BF%98%E6%98%AF%E8%A7%A3%E5%AF%86"><span class="toc-number">2.1.3.</span> <span class="toc-text">如何判断是加密还是解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8F%98%E5%8C%96%E5%AD%97%E6%AF%8D%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">2.变化字母表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%94%B9%E5%8F%98"><span class="toc-number">2.2.1.</span> <span class="toc-text">直接改变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%87%BD%E6%95%B0%E6%94%B9%E5%8F%98"><span class="toc-number">2.2.2.</span> <span class="toc-text">用函数改变</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -240,8 +372,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
