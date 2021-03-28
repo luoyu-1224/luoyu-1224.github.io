@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>V-N2020 公开赛</title>
+      <link href="2021/03/28/V-N2020-%E5%85%AC%E5%BC%80%E8%B5%9B/"/>
+      <url>2021/03/28/V-N2020-%E5%85%AC%E5%BC%80%E8%B5%9B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CSRe"><a href="#CSRe" class="headerlink" title="CSRe"></a>CSRe</h1><a id="more"></a><p>Exeinfo PE查看程序，为C#，而且被混淆。<br>de4dot去除混淆。</p><p><img src="/2021/03/28/V-N2020-%E5%85%AC%E5%BC%80%E8%B5%9B/1.png"></p><p>拖入dnSpy32位中。</p><p><img src="/2021/03/28/V-N2020-%E5%85%AC%E5%BC%80%E8%B5%9B/2.png"></p><p><img src="/2021/03/28/V-N2020-%E5%85%AC%E5%BC%80%E8%B5%9B/3.png"></p><p>然后去在线解密，第一个解出来为314159，第二个为return.</p><blockquote><p>flag{1415turn}</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>DASCTF</title>
       <link href="2021/03/28/DASCTF/"/>
       <url>2021/03/28/DASCTF/</url>
