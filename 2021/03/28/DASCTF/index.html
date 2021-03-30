@@ -58,8 +58,7 @@
 </div>
 
     <div class="section">
-        
-<div class="article">
+        <div class="article">
     <div class='main'>
         <h1 class="title">DASCTF</h1>
         <div class="stuff">
@@ -74,13 +73,23 @@
 <p>是C#文件，32位，放入dnSpy32位中。</p>
 <p><img src="/2021/03/28/DASCTF/2.png"></p>
 <p>第18行是输入判断，输入的字符范围为ASCII码95-122位。<br>第21行是变过密码表的base64加密并判断是否与yQXHyBvN3g/81gv51QXG1QTBxRr/yvXK1hC=相等。<br>第26-29行是一个循环，运行程序这个循环会运行100000秒。<br>第31行是xtea加密的变形。<br>第37-41行是一个异或。</p>
-<p>开始这道题我是静态分析的，但一直都做不出来，然后就把26-29行的循环删掉了，直接就出来flag了。<br>第一次通过修改程序得出flag。</p>
-<p>base64解密：</p>
+<h2 id="方法一：静态分析"><a href="#方法一：静态分析" class="headerlink" title="方法一：静态分析"></a>方法一：静态分析</h2><p>base64解密：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">char a[]&#x3D;&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+&#x2F;&quot;;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	char b[]&#x3D;&quot;abcdefghijklmnopqrstuvwxyz0123456789+&#x2F;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#x3D;&quot;;</span><br><span class="line">    char c[]&#x3D;&quot;yQXHyBvN3g&#x2F;81gv51QXG1QTBxRr&#x2F;yvXK1hC&#x3D;&quot;;</span><br><span class="line">    int i,j;</span><br><span class="line">    for(i&#x3D;0;i&lt;strlen(c);i++)</span><br><span class="line">    &#123;</span><br><span class="line">        for(j&#x3D;0;j&lt;strlen(a);j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(b[j]&#x3D;&#x3D;c[i])</span><br><span class="line">            &#123;</span><br><span class="line">                c[i]&#x3D;a[j];</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(i&#x3D;0;i&lt;strlen(c);i++)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(&quot;%c&quot;,c[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>原密文:Y29tYnVzdGlibGVfb29sb25nX3RlYV9wbHo=<br>在线解密得：combustible_oolong_tea_plz</p>
 </blockquote>
-<p><img src="/2021/03/28/DASCTF/3.png"></p>
+<p>有xtea加密得到的array：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdint.h&gt;</span><br><span class="line"> </span><br><span class="line">void encipher(unsigned int num_rounds, uint32_t v[2], uint32_t const key[26]) &#123;</span><br><span class="line">    unsigned int i;</span><br><span class="line">    uint32_t v0&#x3D;v[0], v1&#x3D;v[1], sum&#x3D;0, delta&#x3D;2654435464U;</span><br><span class="line">    for (i&#x3D;0; i &lt; num_rounds; i++) &#123;</span><br><span class="line">        v0 +&#x3D; (((v1 &lt;&lt; 4) ^ (v1 &gt;&gt; 5)) + v1) ^ (sum + key[sum &amp; 3]);</span><br><span class="line">        sum +&#x3D; delta;</span><br><span class="line">        v1 +&#x3D; (((v0 &lt;&lt; 4) ^ (v0 &gt;&gt; 5)) + v0) ^ (sum + key[(sum&gt;&gt;11) &amp; 3]);</span><br><span class="line">    &#125;</span><br><span class="line">    v[0]&#x3D;v0; v[1]&#x3D;v1;</span><br><span class="line">&#125;</span><br><span class="line"> int main()</span><br><span class="line">&#123;</span><br><span class="line">    uint32_t v[2]&#x3D;&#123;288,369&#125;;</span><br><span class="line">    uint32_t const k[26]&#x3D;&#123;0x63,0x6f,0x6d,0x62,0x75,0x73,0x74,0x69,0x62,0x6c,0x65,0x5f,0x6f,0x6f,0x6c,0x6f,0x6e,0x67,0x5f,0x74,0x65,0x61,0x5f,0x70,0x6c,0x7a&#125;;</span><br><span class="line">    unsigned int r&#x3D;32;</span><br><span class="line">    encipher(r, v, k);</span><br><span class="line">    printf(&quot;%0x%0x&quot;,v[0],v[1]);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将所得的数字当作字符串</p>
+<blockquote>
+<p>6308fe34b7fe6fdb</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char a[32]&#x3D;&#123; 2, 5, 4, 13, 3, 84, 11, 4, 87, 3, 86, 3, 80, 7, 83, 3, 0, 4, 83, 94, 7, 84, 4, 0, 1, 83, 3, 84, 6, 83, 5, 80 &#125;;</span><br><span class="line">    char b[16]&#x3D;&quot;6308fe34b7fe6fdb&quot;;</span><br><span class="line">    int i;</span><br><span class="line">    for(i&#x3D;0;i&lt;32;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i]&#x3D;a[i]^b[i%16];</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;flag&#123;%s&#125;&quot;,a);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>flag{4645e180540ffa7a67cfa174cde105a2}</p>
+</blockquote>
+<h2 id="方法二：修改程序"><a href="#方法二：修改程序" class="headerlink" title="方法二：修改程序"></a>方法二：修改程序</h2><p>我们若直接输入combustible_oolong_tea_plz，程序运行100000秒后才会出flag，这是因为26-29行的循环。<br>只要把这个循环删去就行了。比静态分析简单多了。<br><img src="/2021/03/28/DASCTF/3.png"></p>
 <blockquote>
 <p>flag{4645e180540ffa7a67cfa174cde105a2}</p>
 </blockquote>
@@ -119,15 +128,11 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Enjoyit-1"><span class="toc-number">1.</span> <span class="toc-text">Enjoyit-1</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Enjoyit-1"><span class="toc-number">1.</span> <span class="toc-text">Enjoyit-1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">方法一：静态分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BF%AE%E6%94%B9%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">方法二：修改程序</span></a></li></ol></li></ol>	
         </div>
     
 </div>
 
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<span>
-   阅读数<span id="busuanzi_value_page_pv"></span>
-</span>
     </div>
 </div>
 </body>
