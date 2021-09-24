@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>CentOs报错记录</title>
+      <link href="2021/09/24/CentOs%E6%8A%A5%E9%94%99%E8%AE%B0%E5%BD%95/"/>
+      <url>2021/09/24/CentOs%E6%8A%A5%E9%94%99%E8%AE%B0%E5%BD%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="安装tree"><a href="#安装tree" class="headerlink" title="安装tree"></a>安装tree</h1><p>CentOS安装tree使用命令</p><blockquote><p>sudo apt install tree</p></blockquote><p>若出现以下报错：</p><p><img src="/2021/09/24/CentOs%E6%8A%A5%E9%94%99%E8%AE%B0%E5%BD%95/1.png"></p><blockquote><p>E: 无法获得锁 /var/lib/dpkg/lock-frontend - open (11: 资源暂时不可用)<br>E: 无法获取 dpkg 前端锁 (/var/lib/dpkg/lock-frontend)，是否有其他进程正占用它？</p></blockquote><p>使用命令：</p><blockquote><p>sudo rm /var/cache/apt/archives/lock</p></blockquote><blockquote><p>sudo rm /var/lib/dpkg/lock</p></blockquote><p>再输入：</p><blockquote><p>sudo apt install tree</p></blockquote><p><img src="/2021/09/24/CentOs%E6%8A%A5%E9%94%99%E8%AE%B0%E5%BD%95/2.png"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CISCN2021</title>
       <link href="2021/05/16/CISCN2021/"/>
       <url>2021/05/16/CISCN2021/</url>
