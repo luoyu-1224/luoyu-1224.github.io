@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>buu-re-2</title>
+      <link href="2021/10/08/buu-re-2/"/>
+      <url>2021/10/08/buu-re-2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Oruga"><a href="#Oruga" class="headerlink" title="Oruga"></a>Oruga</h1><p>64位程序，无壳，拖入ida中反编译</p><p><img src="/2021/10/08/buu-re-2/1.PNG"></p><p>flag前五位应为actf{，然后查看sub_78A</p><h2 id="sub-78A"><a href="#sub-78A" class="headerlink" title="sub_78A"></a>sub_78A</h2><p><img src="/2021/10/08/buu-re-2/2.PNG"><br><img src="/2021/10/08/buu-re-2/3.PNG"></p><p>看了别人的思路才知道是迷宫<br>从左上角开始，到！结束，在16进制试图下查看更明显</p><p><img src="/2021/10/08/buu-re-2/4.PNG"></p><p>走完迷宫即可得到flag</p><blockquote><p>flag{MEWEMEWJMEWJM}</p></blockquote><h1 id="easy-strcmp"><a href="#easy-strcmp" class="headerlink" title="easy strcmp"></a>easy strcmp</h1><p>64位程序，无壳<br>查看main函数</p><p><img src="/2021/10/08/buu-re-2/5.PNG"></p><p>除了一个比较找不到其他信息，查看其余函数，sub_6EA具有明显逻辑。</p><p><img src="/2021/10/08/buu-re-2/6.PNG"></p><p>一个减法运算，写脚本解密</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> flag[<span class="number">24</span>] = &#123;<span class="number">0x42</span>, <span class="number">0x09</span>, <span class="number">0x4A</span>, <span class="number">0x49</span>, <span class="number">0x35</span>, <span class="number">0x43</span>, <span class="number">0x0A</span>, <span class="number">0x41</span>, <span class="number">0xF0</span>, <span class="number">0x19</span>, <span class="number">0xE6</span>, <span class="number">0x0B</span>, <span class="number">0xF5</span>, <span class="number">0xF2</span>, <span class="number">0x0E</span>, <span class="number">0x0B</span>, <span class="number">0x2B</span>, <span class="number">0x28</span>, <span class="number">0x35</span>, <span class="number">0x4A</span>, <span class="number">0x06</span>, <span class="number">0x3A</span>, <span class="number">0x0A</span>, <span class="number">0x4F</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> str[<span class="number">24</span>] = &#123;<span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x43</span>, <span class="number">0x45</span>, <span class="number">0x4E</span>, <span class="number">0x53</span>, <span class="number">0x4F</span>, <span class="number">0x52</span>, <span class="number">0x45</span>, <span class="number">0x44</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>, <span class="number">0x2A</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">24</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        flag[i] += str[i];</span><br><span class="line">        <span class="keyword">if</span>(i==<span class="number">9</span>||i==<span class="number">11</span>||i==<span class="number">13</span>||i==<span class="number">14</span>)</span><br><span class="line">            flag[i]+=<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, flag[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>为什么要在第i=9、11、13、14时进行+1，我也不明白，看看这两篇文章或许你就能明白。<br><a href="https://blog.csdn.net/Tokameine/article/details/118148770?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0.control&spm=1001.2101.3001.4242">文章1</a><br><a href="https://ctftime.org/writeup/18785">文章2</a></p><blockquote><p>flag{l3ts_m4k3_4_DETOUR_t0d4y}</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+          <category> Re </category>
+          
+          <category> wp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CTF-Re-wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>buu-re-1</title>
       <link href="2021/10/08/buu-re-1/"/>
       <url>2021/10/08/buu-re-1/</url>
@@ -17,7 +46,7 @@
           
           <category> Re </category>
           
-          <category> 知识点 </category>
+          <category> wp </category>
           
       </categories>
       
