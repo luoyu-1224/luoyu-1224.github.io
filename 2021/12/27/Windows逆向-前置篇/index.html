@@ -1,0 +1,594 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Windows逆向-前置篇 | L1uis1'sblog</title><meta name="keywords" content="Windows逆向"><meta name="author" content="L1uis1"><meta name="copyright" content="L1uis1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本篇主要学习c&#x2F;c++，汇编等语言第一节：环境配置与基础知识VS操作： 资源管理器消失，在视图中打开 调试所需窗口在调试-视图中 调试： F5：运行    F9：设置断点        F10：单步步过    F11：单步步入 Ctrl+F5：直接运行 注释： 先CTRL+K，然后CTRL+C 取消注释： 先CTRL+K，然后CTRL+U  本节代码entry.c123456789#include">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows逆向-前置篇">
+<meta property="og:url" content="http://example.com/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/index.html">
+<meta property="og:site_name" content="L1uis1&#39;sblog">
+<meta property="og:description" content="本篇主要学习c&#x2F;c++，汇编等语言第一节：环境配置与基础知识VS操作： 资源管理器消失，在视图中打开 调试所需窗口在调试-视图中 调试： F5：运行    F9：设置断点        F10：单步步过    F11：单步步入 Ctrl+F5：直接运行 注释： 先CTRL+K，然后CTRL+C 取消注释： 先CTRL+K，然后CTRL+U  本节代码entry.c123456789#include">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/13.png">
+<meta property="article:published_time" content="2021-12-27T07:54:51.000Z">
+<meta property="article:modified_time" content="2021-12-27T14:40:11.111Z">
+<meta property="article:author" content="L1uis1">
+<meta property="article:tag" content="Windows逆向">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/13.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Windows逆向-前置篇',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-12-27 22:40:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/Avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/13.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">L1uis1'sblog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Windows逆向-前置篇</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-27T07:54:51.000Z" title="发表于 2021-12-27 15:54:51">2021-12-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-12-27T14:40:11.111Z" title="更新于 2021-12-27 22:40:11">2021-12-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows%E9%80%86%E5%90%91/">Windows逆向</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Windows逆向-前置篇"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="本篇主要学习c-c-，汇编等语言"><a href="#本篇主要学习c-c-，汇编等语言" class="headerlink" title="本篇主要学习c/c++，汇编等语言"></a>本篇主要学习c/c++，汇编等语言</h1><h1 id="第一节：环境配置与基础知识"><a href="#第一节：环境配置与基础知识" class="headerlink" title="第一节：环境配置与基础知识"></a>第一节：环境配置与基础知识</h1><h2 id="VS操作："><a href="#VS操作：" class="headerlink" title="VS操作："></a>VS操作：</h2><ol>
+<li>资源管理器消失，在视图中打开</li>
+<li>调试所需窗口在调试-视图中</li>
+<li>调试： F5：运行    F9：设置断点        F10：单步步过    F11：单步步入</li>
+<li>Ctrl+F5：直接运行</li>
+<li>注释： 先CTRL+K，然后CTRL+C</li>
+<li>取消注释： 先CTRL+K，然后CTRL+U</li>
+</ol>
+<h2 id="本节代码"><a href="#本节代码" class="headerlink" title="本节代码"></a>本节代码</h2><h3 id="entry-c"><a href="#entry-c" class="headerlink" title="entry.c"></a>entry.c</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;add.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> nNumber = AddFunc(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;HelloWorld! %d&quot;</span>, nNumber);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="add-c"><a href="#add-c" class="headerlink" title="add.c"></a>add.c</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;add.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">AddFunc</span><span class="params">(<span class="keyword">int</span> nNum1, <span class="keyword">int</span> nNum2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> nNum3 = nNum1 + nNum2;</span><br><span class="line">	<span class="keyword">return</span> nNum3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="add-h"><a href="#add-h" class="headerlink" title="add.h"></a>add.h</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">AddFunc</span><span class="params">(<span class="keyword">int</span> nNum1, <span class="keyword">int</span> nNum2)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><ol>
+<li>什么是可移植性<br>所编写的代码可以在多个系统中运行</li>
+<li>编译器是做什么的<br>把以特定编程语言写成的程序变为机器可以运行的机器码。</li>
+<li>连接器是做什么的<br>把由编译器或汇编器生成的若干个目标模块，整合成一个被称为载入模块或可执行文件的实体</li>
+<li>什么是语法错误<br>少写了一个分号或括号那种</li>
+<li>什么是语义错误<br>变量名写错了</li>
+<li>6种运行库编译选项的区别<br>ML对应单线程静态版的标准程序库（libc.lib）；<br>MT对应多线程静态版标准库（libcmt.lib），此时编译器会自动定义_MT宏；<br>MD对应多线程DLL版（导入库msvcrt.lib，DLL是msvcrt.dll），编译器自动定义_MT和_DLL两个宏。<br>后面加d的选项都会让编译器自动多定义一个_DEBUG宏，表示要使用对应标准库的调试版，因此：<br>MLd对应调试版单线程静态标准库（libcd.lib）；<br>MTd对应调试版多线程静态标准库（libcmtd.lib）；<br>MDd对应调试版多线程DLL标准库（导入库msvcrtd.lib，DLL是msvcrtd.dll）。<br>静态链接的单线程库<br>静态链接的单线程库只能用于单线程的应用程序，C运行时库的目标代码最终被编译在应用程序的二进制文件中。通过/ML编译选项可以设置Visual C++使用静态链接的单线程库。<br>静态链接的多线程库<br>静态链接的多线程库的目标代码也最终被编译在应用程序的二进制文件中，但是它可以在多线程程序中使用。通过/MT编译选项可以设置Visual C++使用静态链接的单线程库。<br>动态链接的运行时库<br>动态链接的运行时库将所有的C库函数保存在一个单独的动态链接库MSVCRTxx.DLL中，MSVCRTxx.DLL处理了多线程问题。使用/MD编译选项可以设置Visual C++使用动态链接的运行时库。</li>
+<li><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Weedyssr\n&quot;</span></span><br><span class="line">			<span class="string">&quot;18\n&quot;</span></span><br><span class="line">			<span class="string">&quot;11111111111\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Info</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Weedyssr\n&quot;</span></span><br><span class="line">			<span class="string">&quot;18\n&quot;</span></span><br><span class="line">			<span class="string">&quot;11111111111\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Info();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="第二节：基础数据类型与算术运算符"><a href="#第二节：基础数据类型与算术运算符" class="headerlink" title="第二节：基础数据类型与算术运算符"></a>第二节：基础数据类型与算术运算符</h1><h2 id="知识总结"><a href="#知识总结" class="headerlink" title="知识总结"></a>知识总结</h2><h3 id="数据类型概览-整数与浮点数"><a href="#数据类型概览-整数与浮点数" class="headerlink" title="数据类型概览(整数与浮点数)"></a>数据类型概览(整数与浮点数)</h3><table>
+<thead>
+<tr>
+<th align="center">K&amp;R</th>
+<th align="center">C90</th>
+<th align="center">c99</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">signed</td>
+<td align="center">_Bool</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">void</td>
+<td align="center">_Complex</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center"></td>
+<td align="center">_Imaginary</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center"></td>
+<td align="center">long long</td>
+</tr>
+<tr>
+<td align="center">unsigned</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="整数类型-基于MSVC"><a href="#整数类型-基于MSVC" class="headerlink" title="整数类型(基于MSVC)"></a>整数类型(基于MSVC)</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">宽度(字节)</th>
+<th align="center">无符号范围(unsigned)</th>
+<th align="center">有符号数范围(signed)</th>
+<th align="center">打印方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">short</td>
+<td align="center">2</td>
+<td align="center">0~65535</td>
+<td align="center">-32768~32767</td>
+<td align="center">%hd</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">4</td>
+<td align="center">0~4294967295</td>
+<td align="center">-2147483648~2147483647</td>
+<td align="center">%d</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">4</td>
+<td align="center">0~4294967295</td>
+<td align="center">-2147483648~2147483647</td>
+<td align="center">%ld</td>
+</tr>
+<tr>
+<td align="center">long long</td>
+<td align="center">8</td>
+<td align="center">0~18446744073709551615</td>
+<td align="center">-9223372036854775808~9223372036854775807</td>
+<td align="center">%lld</td>
+</tr>
+</tbody></table>
+<h3 id="字符类型与特殊字符"><a href="#字符类型与特殊字符" class="headerlink" title="字符类型与特殊字符"></a>字符类型与特殊字符</h3><ol>
+<li><p>字符类型</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">宽度(字节)</th>
+<th align="center">无符号范围(unsigned)</th>
+<th align="center">有符号数范围(signed)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">char</td>
+<td align="center">1</td>
+<td align="center">0~255</td>
+<td align="center">-128~127</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>非打印字符</p>
+<table>
+<thead>
+<tr>
+<th align="center">转义序列</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">\a</td>
+<td align="center">警告</td>
+</tr>
+<tr>
+<td align="center">\b</td>
+<td align="center">退格</td>
+</tr>
+<tr>
+<td align="center">\f</td>
+<td align="center">换页</td>
+</tr>
+<tr>
+<td align="center">\n</td>
+<td align="center">换行</td>
+</tr>
+<tr>
+<td align="center">\r</td>
+<td align="center">回车</td>
+</tr>
+<tr>
+<td align="center">\t</td>
+<td align="center">水平制表符</td>
+</tr>
+<tr>
+<td align="center">\v</td>
+<td align="center">垂直制表符</td>
+</tr>
+<tr>
+<td align="center">\\</td>
+<td align="center">反斜杠</td>
+</tr>
+<tr>
+<td align="center">\‘</td>
+<td align="center">单引号</td>
+</tr>
+<tr>
+<td align="center">\“</td>
+<td align="center">双引号</td>
+</tr>
+<tr>
+<td align="center">\?</td>
+<td align="center">问号</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>ASCII码<br><img src="/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/1.png"></p>
+</li>
+</ol>
+<h3 id="浮点数类型"><a href="#浮点数类型" class="headerlink" title="浮点数类型"></a>浮点数类型</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">宽度(字节)</th>
+<th align="center">范围</th>
+<th align="center">别称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">float</td>
+<td align="center">4</td>
+<td align="center">-3.4E+38~3.4E+38</td>
+<td align="center">单精度浮点数</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">8</td>
+<td align="center">-1.7E+308~1.7E+308</td>
+<td align="center">双精度浮点数</td>
+</tr>
+</tbody></table>
+<p>浮点数不精确存储，不可用 = 判断</p>
+<h3 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">_Bool</td>
+<td align="center">true/false</td>
+</tr>
+</tbody></table>
+<h3 id="其他类型"><a href="#其他类型" class="headerlink" title="其他类型"></a>其他类型</h3><ol>
+<li>指针</li>
+<li>结构体</li>
+<li>枚举</li>
+</ol>
+<h3 id="C语言字符串"><a href="#C语言字符串" class="headerlink" title="C语言字符串"></a>C语言字符串</h3><table>
+<thead>
+<tr>
+<th align="center">w</th>
+<th align="center">e</th>
+<th align="center">e</th>
+<th align="center">d</th>
+<th align="center">y</th>
+<th align="center">s</th>
+<th align="center">s</th>
+<th align="center">r</th>
+<th align="center">\0</th>
+</tr>
+</thead>
+</table>
+<p>本质是一个字符数组， 最后一位为’\0’</p>
+<h3 id="常量与预处理器"><a href="#常量与预处理器" class="headerlink" title="常量与预处理器"></a>常量与预处理器</h3><ol>
+<li>常量：#define</li>
+<li>制度：const</li>
+</ol>
+<h3 id="printf与scanf"><a href="#printf与scanf" class="headerlink" title="printf与scanf"></a>printf与scanf</h3><table>
+<thead>
+<tr>
+<th align="center">转换字符</th>
+<th align="center">参数类型：转换结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">c</td>
+<td align="center">char: 字符</td>
+</tr>
+<tr>
+<td align="center">d</td>
+<td align="center">int: 有符号十进制数</td>
+</tr>
+<tr>
+<td align="center">i</td>
+<td align="center">同上</td>
+</tr>
+<tr>
+<td align="center">e</td>
+<td align="center">double: 以指数形式输出单、双精度浮点数(小写e)</td>
+</tr>
+<tr>
+<td align="center">E</td>
+<td align="center">同上</td>
+</tr>
+<tr>
+<td align="center">f</td>
+<td align="center">double: 以小数形式输出单、双精度浮点数</td>
+</tr>
+<tr>
+<td align="center">g</td>
+<td align="center">double: 以%e或%f中较短的输出宽带输出单、双精度浮点数(指数显示小写e)</td>
+</tr>
+<tr>
+<td align="center">G</td>
+<td align="center">同上(指数显示小写E)</td>
+</tr>
+<tr>
+<td align="center">o</td>
+<td align="center">unsigned int: 无符号八进制(无前导0)</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">char*: 字符串</td>
+</tr>
+<tr>
+<td align="center">u</td>
+<td align="center">int: 无符号十进制</td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">unsigned int: 无符号十六进制(无前导0x)</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">同上(无前导0X)</td>
+</tr>
+<tr>
+<td align="center">p</td>
+<td align="center">void*: 指针值</td>
+</tr>
+<tr>
+<td align="center">n</td>
+<td align="center">int*: 存放已写字符的个数</td>
+</tr>
+<tr>
+<td align="center">%</td>
+<td align="center">不进行参数转换: %自身</td>
+</tr>
+</tbody></table>
+<h3 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h3><table>
+<thead>
+<tr>
+<th align="center">运算符</th>
+<th align="center">含义</th>
+<th align="center">运算符</th>
+<th align="center">含义</th>
+<th align="center">运算符</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">=</td>
+<td align="center">赋值</td>
+<td align="center">%</td>
+<td align="center">取模</td>
+<td align="center">%=</td>
+<td align="center">取模等</td>
+</tr>
+<tr>
+<td align="center">==</td>
+<td align="center">相等</td>
+<td align="center">++</td>
+<td align="center">自增</td>
+<td align="center">sizeof</td>
+<td align="center">取宽度</td>
+</tr>
+<tr>
+<td align="center">!=</td>
+<td align="center">不等</td>
+<td align="center">–</td>
+<td align="center">自减</td>
+<td align="center">&gt;</td>
+<td align="center">大于</td>
+</tr>
+<tr>
+<td align="center">+</td>
+<td align="center">加法</td>
+<td align="center">+=</td>
+<td align="center">加等</td>
+<td align="center">&lt;</td>
+<td align="center">小于</td>
+</tr>
+<tr>
+<td align="center">-</td>
+<td align="center">减法</td>
+<td align="center">-=</td>
+<td align="center">减等</td>
+<td align="center">&gt;=</td>
+<td align="center">大于等于</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">乘法</td>
+<td align="center">*=</td>
+<td align="center">乘等</td>
+<td align="center">&lt;=</td>
+<td align="center">小于等于</td>
+</tr>
+<tr>
+<td align="center">/</td>
+<td align="center">除法</td>
+<td align="center">/=</td>
+<td align="center">除等</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="本节代码-1"><a href="#本节代码-1" class="headerlink" title="本节代码"></a>本节代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1111</span>;</span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">01234</span>;</span><br><span class="line">	<span class="keyword">int</span> c = <span class="number">0x12345</span>;</span><br><span class="line">	<span class="keyword">short</span> sa = <span class="number">12</span>;</span><br><span class="line">	<span class="keyword">long</span> la = <span class="number">123</span>;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> lla = <span class="number">123456</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %#o %#x %hd %ld %lld&quot;</span>, a, b, c, sa, la, lla);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="作业-1"><a href="#作业-1" class="headerlink" title="作业"></a>作业</h2><ol>
+<li>以下数据适合使用什么类型进行描述?<br> 某省的人口<br> 书籍的价格<br> 你的年龄<br> 你的名字</li>
+<li>今天学习的各种数据类型的宽度是多少?计算后使用printf函数输出（格式: int = 4字节)</li>
+<li>以下数据都应该在 printf中使用什么格式化字符?<br> 12.55<br> 123.3<br> “Rkvir.”<br> ‘℃’</li>
+<li>0b10101+0x1258= ?</li>
+<li>(Ox5F24* 0154)%4= ?</li>
+<li>以下转义的含义<br> \n<br> \\<br> \“<br> \t</li>
+<li>编写代码，实现输入ASCI输出字符<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%c\n&quot;</span>, num);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>一年大概有(365*24*60*60)秒, 实现输入一个人的年龄，输出秒数<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, num  * <span class="number">365</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>1英寸等于2.54厘米，实现输入一个人的身高(英寸)，输出厘米单位的身高数<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">float</span> num;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%f&quot;</span>, &amp;num);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%f\n&quot;</span>, num  * <span class="number">2.54</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>编写一个程序，分别输入姓名，以姓-名的方式数输出<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> name1[<span class="number">20</span>], name2[<span class="number">20</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, name1);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, name2);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s-%s\n&quot;</span>, name1, name2);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>把第9题的秒数计算过程中的年月日，都使用常量替换<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SECOND 31536000</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> num;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;num);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, num * SECOND);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>#define 与const的区别</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">L1uis1</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/">http://example.com/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">L1uis1'sblog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Windows%E9%80%86%E5%90%91/">Windows逆向</a></div><div class="post_share"><div class="social-share" data-image="/img/13.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/12/15/%E9%87%91%E7%9B%BE%E6%9D%AFRe-Wp/"><img class="next-cover" src="/img/9.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">金盾杯Re Wp</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment"></span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/Avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">L1uis1</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">re & pwn</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AC%E7%AF%87%E4%B8%BB%E8%A6%81%E5%AD%A6%E4%B9%A0c-c-%EF%BC%8C%E6%B1%87%E7%BC%96%E7%AD%89%E8%AF%AD%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">本篇主要学习c&#x2F;c++，汇编等语言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8A%82%EF%BC%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">第一节：环境配置与基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VS%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">VS操作：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E4%BB%A3%E7%A0%81"><span class="toc-number">2.2.</span> <span class="toc-text">本节代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#entry-c"><span class="toc-number">2.2.1.</span> <span class="toc-text">entry.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#add-c"><span class="toc-number">2.2.2.</span> <span class="toc-text">add.c</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#add-h"><span class="toc-number">2.2.3.</span> <span class="toc-text">add.h</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A"><span class="toc-number">2.3.</span> <span class="toc-text">作业</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8A%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">3.</span> <span class="toc-text">第二节：基础数据类型与算术运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93"><span class="toc-number">3.1.</span> <span class="toc-text">知识总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%A7%88-%E6%95%B4%E6%95%B0%E4%B8%8E%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-number">3.1.1.</span> <span class="toc-text">数据类型概览(整数与浮点数)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B-%E5%9F%BA%E4%BA%8EMSVC"><span class="toc-number">3.1.2.</span> <span class="toc-text">整数类型(基于MSVC)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B%E4%B8%8E%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="toc-number">3.1.3.</span> <span class="toc-text">字符类型与特殊字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.4.</span> <span class="toc-text">浮点数类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.5.</span> <span class="toc-text">布尔类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.6.</span> <span class="toc-text">其他类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">3.1.7.</span> <span class="toc-text">C语言字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">3.1.8.</span> <span class="toc-text">常量与预处理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#printf%E4%B8%8Escanf"><span class="toc-number">3.1.9.</span> <span class="toc-text">printf与scanf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">3.1.10.</span> <span class="toc-text">算术运算符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E4%BB%A3%E7%A0%81-1"><span class="toc-number">3.2.</span> <span class="toc-text">本节代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A-1"><span class="toc-number">3.3.</span> <span class="toc-text">作业</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/" title="Windows逆向-前置篇"><img src="/img/13.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows逆向-前置篇"/></a><div class="content"><a class="title" href="/2021/12/27/Windows%E9%80%86%E5%90%91-%E5%89%8D%E7%BD%AE%E7%AF%87/" title="Windows逆向-前置篇">Windows逆向-前置篇</a><time datetime="2021-12-27T07:54:51.000Z" title="发表于 2021-12-27 15:54:51">2021-12-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/15/%E9%87%91%E7%9B%BE%E6%9D%AFRe-Wp/" title="金盾杯Re Wp"><img src="/img/9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="金盾杯Re Wp"/></a><div class="content"><a class="title" href="/2021/12/15/%E9%87%91%E7%9B%BE%E6%9D%AFRe-Wp/" title="金盾杯Re Wp">金盾杯Re Wp</a><time datetime="2021-12-15T15:15:42.000Z" title="发表于 2021-12-15 23:15:42">2021-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/11/buu-re-4/" title="buu-re-4"><img src="/img/14.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="buu-re-4"/></a><div class="content"><a class="title" href="/2021/12/11/buu-re-4/" title="buu-re-4">buu-re-4</a><time datetime="2021-12-11T14:55:00.000Z" title="发表于 2021-12-11 22:55:00">2021-12-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/11/buu-re-3/" title="buu-re-3"><img src="/img/16.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="buu-re-3"/></a><div class="content"><a class="title" href="/2021/12/11/buu-re-3/" title="buu-re-3">buu-re-3</a><time datetime="2021-12-11T14:54:54.000Z" title="发表于 2021-12-11 22:54:54">2021-12-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/26/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/" title="逆向工程核心原理"><img src="/img/14.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="逆向工程核心原理"/></a><div class="content"><a class="title" href="/2021/11/26/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/" title="逆向工程核心原理">逆向工程核心原理</a><time datetime="2021-11-26T11:39:49.000Z" title="发表于 2021-11-26 19:39:49">2021-11-26</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/13.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By L1uis1</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'CNQwFojWmxjfm1MAWaAlshpj-gzGzoHsz',
+      appKey: 'w3LBoSuBHA9tRbKqpKMRKz6k',
+      placeholder: '记得留下你的暱称和邮箱....可以快速收到回復',
+      avatar: 'mp',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick, mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
